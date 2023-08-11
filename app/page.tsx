@@ -17,7 +17,7 @@ export default function Chat() {
           ))
         : null}
 
-      <InputForms />
+      {/* <InputForms /> */}
 
       <form onSubmit={handleSubmit}>
         <input
