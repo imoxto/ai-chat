@@ -2,14 +2,9 @@
 
 import InputForms from '@/components/InputForms';
 import { useChat } from 'ai/react';
-import { useState } from 'react';
+import { useState } from "react";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Chat() {
   const [result, setResult] = useState<string | null>(null);
@@ -39,14 +34,14 @@ export default function Chat() {
         isLoading={isLoading}
       />
 
-      {messages[messages.length - 1]?.content && (
+      {messages[1]?.content && (
         <Card>
           <CardHeader className="items-center">
             <CardTitle>Response</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-gray-800">
-              {messages[messages.length - 1].content.split("\n").map((line) => {
+              {messages[1].content.split("\n").map((line) => {
                 return <p>{line}</p>;
               })}
             </p>
