@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function InputForms({ input, handleSubmit, setInput, isLoading }: any) {
+export default function InputForms({ handleSubmit, isLoading }: any) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

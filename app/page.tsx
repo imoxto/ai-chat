@@ -14,7 +14,7 @@ import {
 export default function Chat() {
   const [result, setResult] = useState<string | null>(null);
 
-  const { append, input, handleSubmit, setInput, isLoading } = useChat({
+  const { append, input, setInput, isLoading } = useChat({
     onFinish: (message) => {
       setResult(message.content);
     },
