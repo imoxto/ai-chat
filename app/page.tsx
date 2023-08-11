@@ -14,7 +14,7 @@ import {
 export default function Chat() {
   const [result, setResult] = useState<string | null>(null);
 
-  const { append, input, setInput, isLoading } = useChat({
+  const { messages, append, isLoading, setMessages } = useChat({
     onFinish: (message) => {
       setResult(message.content);
     },
@@ -32,21 +32,24 @@ export default function Chat() {
       </div>
 
       <InputForms
-        input={input}
-        handleSubmit={(message: string) =>
-          append({ role: "user", content: message })
-        }
-        setInput={setInput}
+        handleSubmit={(message: string) => {
+          setMessages([]);
+          append({ role: "user", content: message });
+        }}
         isLoading={isLoading}
       />
 
-      {result && (
+      {messages[messages.length - 1]?.content && (
         <Card>
           <CardHeader className="items-center">
             <CardTitle>Response</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-center text-gray-800">{result}</p>
+            <p className="text-gray-800">
+              {messages[messages.length - 1].content.split("\n").map((line) => {
+                return <p>{line}</p>;
+              })}
+            </p>
           </CardContent>
         </Card>
       )}
