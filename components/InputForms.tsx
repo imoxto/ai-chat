@@ -69,7 +69,7 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    console.log(values);
     handleSubmit(JSON.stringify(values));
   }
 
@@ -87,7 +87,10 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="propertyName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Property Name</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Property Name and
+                  Address
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter the name of the property and address"
@@ -103,7 +106,9 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="yearOfConstruction"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Year of Construction</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Year of Construction
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter the year of construction"
@@ -121,7 +126,10 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="sizeOfTheProperty"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Size of the Property (in acres)</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Size of the Property
+                  (in acres)
+                </FormLabel>{" "}
                 <FormControl>
                   <Input
                     placeholder="Enter the size of the property"
@@ -137,7 +145,10 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="sizeOfTheHome"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Size of the Home (in square meters)</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Size of the Home (in
+                  square meters)
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Enter the size of the home" {...field} />
                 </FormControl>
@@ -152,7 +163,9 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="numberOfRooms"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Number of Rooms</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Number of Rooms
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Enter the number of rooms" {...field} />
                 </FormControl>
@@ -199,7 +212,9 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="nearbyAmenities"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nearby Amenities</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Nearby Amenities
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter services like schools, hospitals, shops, etc."
@@ -230,7 +245,9 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
             name="geographicalFeatures"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Geographical Features</FormLabel>
+                <FormLabel>
+                  <span style={{ color: "red" }}>*</span> Geographical Features
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder='Enter features, e.g., "Near a lake, surrounded by hills"'

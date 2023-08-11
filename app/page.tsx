@@ -24,10 +24,10 @@ export default function Chat() {
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          {"AI app for something we don't know"}
+          {"AI app for Realtors"}
         </h1>
         <p className="text-lg text-muted-foreground">
-          Just put on the details and get railed
+          Just put on the details and get started
         </p>
       </div>
 
