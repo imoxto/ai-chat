@@ -18,17 +18,17 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const formSchema = z.object({
-  Name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+  Name: z.string().min(1, {
+    message: "Name must be at least 2 characters.",
   }),
-  Location: z.string().min(2, {
-    message: 'Location must be at least 2 characters.',
+  Location: z.string().min(1, {
+    message: "Location must be at least 2 characters.",
   }),
-  Description: z.string().min(2, {
-    message: 'Description must be at least 2 characters.',
+  Description: z.string().min(1, {
+    message: "Description must be at least 2 characters.",
   }),
-  AdditionalInfo: z.string().min(2, {
-    message: 'Additional Info must be at least 2 characters.',
+  AdditionalInfo: z.string().min(1, {
+    message: "Additional Info must be at least 2 characters.",
   }),
 });
 
@@ -46,10 +46,8 @@ export default function InputForms({ input, handleSubmit, setInput, isLoading }:
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setInput(
-      // TODO: Template the string below.
-      `${values.Description}  + ${values.AdditionalInfo} + ${values.Location} + ${values.Name}`
+    handleSubmit(
+      `${values.Name} ${values.Location} ${values.Description} ${values.AdditionalInfo}`
     );
   }
 
@@ -58,49 +56,48 @@ export default function InputForms({ input, handleSubmit, setInput, isLoading }:
       <form
         onSubmit={(e) => {
           form.handleSubmit(onSubmit)(e);
-          handleSubmit(e);
         }}
-        className='space-y-8'
+        className="space-y-8"
       >
-        <div className='grid grid-cols-2 gap-2'>
+        <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name='Name'
+            name="Name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='John doe' {...field} />
+                  <Input placeholder="John doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name='Location'
+            name="Location"
             control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder='Los gatos, CA' {...field} />
+                  <Input placeholder="Los gatos, CA" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className='grid grid-cols-2 gap-2'>
+        <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name='Description'
+            name="Description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>How can we help you?</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder='I want to build a custom AI chatbot for my e-commerce business that can serve as a customer care representative...'
-                    className='resize-none'
+                    placeholder="I want to build a custom AI chatbot for my e-commerce business that can serve as a customer care representative..."
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -109,14 +106,14 @@ export default function InputForms({ input, handleSubmit, setInput, isLoading }:
           />
           <FormField
             control={form.control}
-            name='AdditionalInfo'
+            name="AdditionalInfo"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Provide Addition information</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder='Here are the details of my project...'
-                    className='resize-none'
+                    placeholder="Here are the details of my project..."
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -124,8 +121,8 @@ export default function InputForms({ input, handleSubmit, setInput, isLoading }:
             )}
           />
         </div>
-        <Button disabled={isLoading} type='submit'>
-          {isLoading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+        <Button disabled={isLoading} type="submit">
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Submit
         </Button>
       </form>
