@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Loader2 } from 'lucide-react';
-import * as z from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,23 +13,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
-const formSchema = z.object({
-  Name: z.string().min(1, {
-    message: "Name must be at least 2 characters.",
+export const formSchema = z.object({
+  propertyName: z.string().min(1, {
+    message: "Property Name and Address must be at least 2 characters.",
   }),
-  Location: z.string().min(1, {
-    message: "Location must be at least 2 characters.",
+  yearOfConstruction: z.string().min(1, {
+    message: "Year of Construction must be at least 2 characters.",
   }),
-  Description: z.string().min(1, {
-    message: "Description must be at least 2 characters.",
+  sizeOfTheProperty: z.string().min(1, {
+    message: "Size of the Property (in acres) must be at least 2 characters.",
   }),
-  AdditionalInfo: z.string().min(1, {
-    message: "Additional Info must be at least 2 characters.",
+  sizeOfTheHome: z.string().min(1, {
+    message:
+      "Size of the Home (in square meters) must be at least 2 characters.",
   }),
+  numberOfRooms: z.string().min(1, {
+    message: "Number of Rooms must be at least 2 characters.",
+  }),
+  architecturalStyle: z.string().optional(),
+  outbuildings: z.string().optional(),
+  nearbyAmenities: z.string().min(1, {
+    message: "Nearby Amenities must be at least 2 characters.",
+  }),
+  localAttractions: z.string().optional(),
+  geographicalFeatures: z.string().min(1, {
+    message: "Geographical Features must be at least 2 characters.",
+  }),
+  interiorDetails: z.string().optional(),
+  uniqueSellingPoints: z.string().optional(),
 });
 
 export default function InputForms({ handleSubmit, isLoading }: any) {
@@ -37,18 +52,25 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Name: '',
-      Location: '',
-      Description: '',
-      AdditionalInfo: '',
+      propertyName: "",
+      yearOfConstruction: "",
+      sizeOfTheProperty: "",
+      sizeOfTheHome: "",
+      numberOfRooms: "",
+      architecturalStyle: "",
+      outbuildings: "",
+      nearbyAmenities: "",
+      localAttractions: "",
+      geographicalFeatures: "",
+      interiorDetails: "",
+      uniqueSellingPoints: "",
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    handleSubmit(
-      `${values.Name} ${values.Location} ${values.Description} ${values.AdditionalInfo}`
-    );
+    console.log(values)
+    handleSubmit(JSON.stringify(values));
   }
 
   return (
@@ -62,25 +84,31 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
         <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name="Name"
+            name="propertyName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Property Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John doe" {...field} />
+                  <Input
+                    placeholder="Enter the name of the property and address"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
-            name="Location"
             control={form.control}
+            name="yearOfConstruction"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Location</FormLabel>
+                <FormLabel>Year of Construction</FormLabel>
                 <FormControl>
-                  <Input placeholder="Los gatos, CA" {...field} />
+                  <Input
+                    placeholder="Enter the year of construction"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -90,33 +118,160 @@ export default function InputForms({ handleSubmit, isLoading }: any) {
         <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name="Description"
+            name="sizeOfTheProperty"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>How can we help you?</FormLabel>
+                <FormLabel>Size of the Property (in acres)</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="I want to build a custom AI chatbot for my e-commerce business that can serve as a customer care representative..."
-                    className="resize-none"
+                  <Input
+                    placeholder="Enter the size of the property"
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="AdditionalInfo"
+            name="sizeOfTheHome"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Provide Addition information</FormLabel>
+                <FormLabel>Size of the Home (in square meters)</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Here are the details of my project..."
-                    className="resize-none"
+                  <Input placeholder="Enter the size of the home" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name="numberOfRooms"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Number of Rooms</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the number of rooms" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="architecturalStyle"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Architectural Style</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter the architectural style"
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name="outbuildings"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Outbuildings</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter details or standard/none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="nearbyAmenities"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nearby Amenities</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter services like schools, hospitals, shops, etc."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name="localAttractions"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Local Attractions</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter attractions or none" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="geographicalFeatures"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Geographical Features</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Enter features, e.g., "Near a lake, surrounded by hills"'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          <FormField
+            control={form.control}
+            name="interiorDetails"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Interior Details</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter type of flooring, brand of appliances, design of fixtures, etc."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="uniqueSellingPoints"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Unique Selling Points</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter any aspect of the property that stands out"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
