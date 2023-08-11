@@ -2,9 +2,19 @@
 
 import InputForms from '@/components/InputForms';
 import { useChat } from 'ai/react';
+import { useState } from 'react';
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat();
+
+  const [formData, setFormData] = useState({
+    Name: '',
+    Location: '',
+    Description: '',
+    AdditionalInfo: '',
+  });
+
+  console.log(formData);
 
   return (
     <div className='flex flex-col w-full max-w-md py-24 mx-auto stretch'>
@@ -17,7 +27,7 @@ export default function Chat() {
           ))
         : null}
 
-      {/* <InputForms /> */}
+      <InputForms onFormSubmit={setFormData} />
 
       <form onSubmit={handleSubmit}>
         <input
