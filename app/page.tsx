@@ -5,38 +5,28 @@ import { useChat } from 'ai/react';
 import { useState } from 'react';
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit, setInput } = useChat();
+  const [result, setResult] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
-    Name: '',
-    Location: '',
-    Description: '',
-    AdditionalInfo: '',
+  const { input, handleSubmit, setInput } = useChat({
+    onFinish: (message) => {
+      setResult(message.content);
+    },
   });
 
-  console.log(formData);
-
   return (
-    <div className='flex flex-col w-full max-w-md py-24 mx-auto stretch'>
-      {messages.length > 0
-        ? messages.map((m) => (
-            <div key={m.id} className='whitespace-pre-wrap'>
-              {m.role === 'user' ? 'User: ' : 'AI: '}
-              {m.content}
-            </div>
-          ))
-        : null}
+    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+      {result && (
+        <div className="fixed top-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl">
+          <p className="text-lg font-bold text-center text-gray-800">Result</p>
+          <p className="text-center text-gray-800">{result}</p>
+        </div>
+      )}
 
-      <InputForms onFormSubmit={setFormData} />
-
-      <form onSubmit={handleSubmit}>
-        <input
-          className='fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl'
-          value={input}
-          placeholder='Say something...'
-          onChange={handleInputChange}
-        />
-      </form>
+      <InputForms
+        input={input}
+        handleSubmit={handleSubmit}
+        setInput={setInput}
+      />
     </div>
   );
 }

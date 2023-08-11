@@ -1,11 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useChat } from 'ai/react';
-import * as z from 'zod';
+import { set, useForm } from "react-hook-form";
+import { useChat } from "ai/react";
+import * as z from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,92 +13,94 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   Name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+    message: "Name must be at least 2 characters.",
   }),
   Location: z.string().min(2, {
-    message: 'Location must be at least 2 characters.',
+    message: "Location must be at least 2 characters.",
   }),
   Description: z.string().min(2, {
-    message: 'Description must be at least 2 characters.',
+    message: "Description must be at least 2 characters.",
   }),
   AdditionalInfo: z.string().min(2, {
-    message: 'Additional Info must be at least 2 characters.',
+    message: "Additional Info must be at least 2 characters.",
   }),
 });
 
-export default function InputForms({ onFormSubmit }: any) {
+export default function InputForms({ input, handleSubmit, setInput }: any) {
   // 1. Define your form.
-  
-  const { input, setInput } = useChat();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Name: '',
-      Location: '',
-      Description: '',
-      AdditionalInfo: '',
+      Name: "",
+      Location: "",
+      Description: "",
+      AdditionalInfo: "",
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    if (onFormSubmit) {
-      onFormSubmit(values);
-      setInput(values.Description  + values.AdditionalInfo + values.Location + values.Name)
-    }
+    console.log(values);
+    setInput(
+      // TODO: Template the string below.
+      `${values.Description}  + ${values.AdditionalInfo} + ${values.Location} + ${values.Name}`
+    );
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-        <div className='grid grid-cols-2 gap-2'>
+      <form
+        onSubmit={(e) => {
+          form.handleSubmit(onSubmit)(e);
+          handleSubmit(e);
+        }}
+        className="space-y-8"
+      >
+        <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name='Name'
+            name="Name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='John doe' {...field} />
+                  <Input placeholder="John doe" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
+            name="Location"
             control={form.control}
-            name='Location'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder='Los gatos, CA' {...field} />
+                  <Input placeholder="Los gatos, CA" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className='grid grid-cols-2 gap-2'>
+        <div className="grid grid-cols-2 gap-2">
           <FormField
             control={form.control}
-            name='Description'
+            name="Description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>How can we help you?</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder='I want to build a custom AI chatbot for my e-commerce business that can serve as a customer care representative...'
-                    className='resize-none'
+                    placeholder="I want to build a custom AI chatbot for my e-commerce business that can serve as a customer care representative..."
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -107,14 +109,14 @@ export default function InputForms({ onFormSubmit }: any) {
           />
           <FormField
             control={form.control}
-            name='AdditionalInfo'
+            name="AdditionalInfo"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Provide Addition information</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder='Here are the details of my project...'
-                    className='resize-none'
+                    placeholder="Here are the details of my project..."
+                    className="resize-none"
                     {...field}
                   />
                 </FormControl>
@@ -122,7 +124,7 @@ export default function InputForms({ onFormSubmit }: any) {
             )}
           />
         </div>
-        <Button type='submit'>Submit</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
