@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     stream: true,
     messages: [
       systemPrompt,
-      messages.map((message: any) => ({
+      ...messages.map((message: any) => ({
         content: message.content,
         role: message.role,
       })),
